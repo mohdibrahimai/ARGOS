@@ -1,0 +1,20 @@
+groups:
+  - name: argos-alerts
+    rules:
+      - alert: HighNoEvidenceRate
+        expr: argos_no_evidence_rate > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High no-evidence rate detected"
+          description: "The proportion of answer tokens without evidence has exceeded 50% for the last 5 minutes."
+
+      - alert: HighContradictionRate
+        expr: argos_contradiction_rate > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High contradiction rate detected"
+          description: "More than 10% of answer tokens are contradicted for the last 5 minutes."

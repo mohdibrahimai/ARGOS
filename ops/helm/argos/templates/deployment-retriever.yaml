@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "argos.fullname" . }}-retriever
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "argos.name" . }}-retriever
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "argos.name" . }}-retriever
+    spec:
+      containers:
+        - name: retriever
+          image: {{ .Values.services.retriever.image }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.services.retriever.port }}
+          volumeMounts:
+            - name: seeds
+              mountPath: /seeds
+      volumes:
+        - name: seeds
+          configMap:
+            name: {{ include "argos.fullname" . }}-seeds
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "argos.fullname" . }}-retriever
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.services.retriever.port }}
+      targetPort: {{ .Values.services.retriever.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "argos.name" . }}-retriever

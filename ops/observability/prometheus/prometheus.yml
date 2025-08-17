@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'answer-api'
+    static_configs:
+      - targets: ['answer-api:8000']
+        labels:
+          service: 'answer-api'
+
+  - job_name: 'retriever'
+    static_configs:
+      - targets: ['retriever:8001']
+        labels:
+          service: 'retriever'
+
+  - job_name: 'verifier'
+    static_configs:
+      - targets: ['verifier:8002']
+        labels:
+          service: 'verifier'
+
+  - job_name: 'ui'
+    static_configs:
+      - targets: ['argos-ui:3000']
+        labels:
+          service: 'ui'

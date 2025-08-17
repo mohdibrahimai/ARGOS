@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "argos.fullname" . }}-answer-api
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "argos.name" . }}-answer-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "argos.name" . }}-answer-api
+    spec:
+      containers:
+        - name: answer-api
+          image: {{ .Values.services.answerApi.image }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.services.answerApi.port }}
+          env:
+            - name: RETRIEVER_URL
+              value: "http://{{ include \"argos.fullname\" . }}-retriever:{{ .Values.services.retriever.port }}/v1/search"
+            - name: VERIFIER_URL
+              value: "http://{{ include \"argos.fullname\" . }}-verifier:{{ .Values.services.verifier.port }}/v1/verify"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "argos.fullname" . }}-answer-api
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.services.answerApi.port }}
+      targetPort: {{ .Values.services.answerApi.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "argos.name" . }}-answer-api

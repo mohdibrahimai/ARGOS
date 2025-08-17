@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "argos.fullname" . }}-ui
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "argos.name" . }}-ui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "argos.name" . }}-ui
+    spec:
+      containers:
+        - name: ui
+          image: {{ .Values.services.ui.image }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.services.ui.port }}
+          env:
+            - name: NEXT_PUBLIC_ANSWER_API_URL
+              value: "http://{{ include \"argos.fullname\" . }}-answer-api:{{ .Values.services.answerApi.port }}/v1/answer"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "argos.fullname" . }}-ui
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.services.ui.port }}
+      targetPort: {{ .Values.services.ui.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "argos.name" . }}-ui

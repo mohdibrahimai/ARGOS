@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "argos.fullname" . }}-seeds
+data:
+  seeds.json: |
+{{ .Files.Get "seeds/corpus/seeds.json" | indent 4 }}

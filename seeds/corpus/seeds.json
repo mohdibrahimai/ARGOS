@@ -1,0 +1,32 @@
+[
+  {
+    "source_id": "doc1",
+    "title": "2019 Cricket World Cup Final",
+    "url": "https://example.com/2019-cricket-final",
+    "content": "The 2019 Cricket World Cup final was played at Lord's Cricket Ground in London on 14 July 2019. England won the match, beating New Zealand to claim their first Cricket World Cup title. The game ended in a tie and was decided by a boundary countback after the Super Over also ended in a tie."
+  },
+  {
+    "source_id": "doc2",
+    "title": "GPT-4 vs Llama-3 70B Comparison",
+    "url": "https://example.com/gpt4-vs-llama3",
+    "content": "GPT-4 was released by OpenAI in March 2023 and is known for its multimodal capabilities and improved safety. Llama-3 70B, released by Meta in May 2025, emphasises open-weight access and transparency in its training data. Both models differ in parameter count, training data disclosure and licensing terms."
+  },
+  {
+    "source_id": "doc3",
+    "title": "Currency Conversion on 5 Jan 2022",
+    "url": "https://example.com/currency-2022",
+    "content": "On 5 January 2022 the exchange rate from Indian Rupees (INR) to US Dollars (USD) was approximately 1 USD = 74.5 INR. Therefore, 3,500 INR would be about 46.98 USD at that rate. Exchange rates fluctuate daily."
+  },
+  {
+    "source_id": "doc4",
+    "title": "Visa Policy for Indians Visiting Thailand",
+    "url": "https://example.com/thailand-visa",
+    "content": "As of August 2025, Indian citizens can enter Thailand visa-free for a stay of up to 30 days under the visa exemption scheme. Travellers must hold a valid passport and a return ticket. Policies may change, so travellers should check official sources before planning a trip."
+  },
+  {
+    "source_id": "doc5",
+    "title": "Gemini 1.5 Pro Launch",
+    "url": "https://example.com/gemini-1-5-pro",
+    "content": "El modelo Gemini 1.5 Pro fue lanzado por Google DeepMind en febrero de 2024. Este modelo mejoró la capacidad de razonamiento y comprensión multilingüe en comparación con su predecesor."
+  }
+]

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "argos.fullname" . }}-verifier
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "argos.name" . }}-verifier
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "argos.name" . }}-verifier
+    spec:
+      containers:
+        - name: verifier
+          image: {{ .Values.services.verifier.image }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.services.verifier.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "argos.fullname" . }}-verifier
+  labels: {{- include "argos.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.services.verifier.port }}
+      targetPort: {{ .Values.services.verifier.port }}
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "argos.name" . }}-verifier

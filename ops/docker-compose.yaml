@@ -1,0 +1,83 @@
+version: '3.9'
+services:
+  answer-api:
+    build:
+      context: ..
+      dockerfile: services/answer-api/Dockerfile
+    container_name: answer-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - retriever
+      - verifier
+    environment:
+      - RETRIEVER_URL=http://retriever:8001/v1/search
+      - VERIFIER_URL=http://verifier:8002/v1/verify
+    networks:
+      - argos-net
+
+  retriever:
+    build:
+      context: ..
+      dockerfile: services/retriever/Dockerfile
+    container_name: retriever
+    volumes:
+      - ../seeds:/seeds:ro
+    ports:
+      - "8001:8001"
+    networks:
+      - argos-net
+
+  verifier:
+    build:
+      context: ..
+      dockerfile: services/verifier/Dockerfile
+    container_name: verifier
+    ports:
+      - "8002:8002"
+    networks:
+      - argos-net
+
+  argos-ui:
+    build:
+      context: ..
+      dockerfile: apps/argos-ui/Dockerfile
+    container_name: argos-ui
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_ANSWER_API_URL=http://localhost:8000/v1/answer
+    depends_on:
+      - answer-api
+    networks:
+      - argos-net
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: prometheus
+    volumes:
+      - ../observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - argos-net
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../observability/grafana:/grafana/provisioning:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - argos-net
+
+networks:
+  argos-net:
+    driver: bridge
+
+volumes:
+  grafana-data:

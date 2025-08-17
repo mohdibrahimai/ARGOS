@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for supported/unsupported spans */
+.entailed {
+  background-color: #d1fae5;
+}
+.weak {
+  background-color: #fef3c7;
+}
+.unsupported,
+.contradicted {
+  background-color: #fee2e2;
+}

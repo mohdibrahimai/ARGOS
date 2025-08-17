@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: argos
+  tag: latest
+  pullPolicy: IfNotPresent
+
+services:
+  answerApi:
+    image: answer-api
+    port: 8000
+  retriever:
+    image: retriever
+    port: 8001
+  verifier:
+    image: verifier
+    port: 8002
+  ui:
+    image: argos-ui
+    port: 3000

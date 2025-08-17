@@ -1,0 +1,92 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Support Rate",
+      "datasource": null,
+      "targets": [
+        {
+          "expr": "argos_support_rate",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "Support Rate",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "No-Evidence Rate",
+      "datasource": null,
+      "targets": [
+        {
+          "expr": "argos_no_evidence_rate",
+          "legendFormat": "No-Evidence Rate",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Contradiction Rate",
+      "datasource": null,
+      "targets": [
+        {
+          "expr": "argos_contradiction_rate",
+          "legendFormat": "Contradiction Rate",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "ECE",
+      "datasource": null,
+      "targets": [
+        {
+          "expr": "argos_calibration_ece",
+          "legendFormat": "ECE",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      }
+    }
+  ],
+  "title": "ARGOS Metrics Dashboard",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  }
+}

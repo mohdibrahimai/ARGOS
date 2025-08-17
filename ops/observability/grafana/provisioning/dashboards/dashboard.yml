@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: 'argos'
+    folder: 'ARGOS'
+    type: file
+    options:
+      path: /grafana/provisioning/dashboards
