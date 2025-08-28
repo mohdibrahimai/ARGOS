@@ -8,57 +8,57 @@ concurrency:
 jobs:
   ui:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/argos-ui   # your UI folder
+
     steps:
       - uses: actions/checkout@v4
-
-      - name: Detect UI directory
-        id: detect
-        shell: bash
-        run: |
-          set -e
-          UI_DIR=""
-          for CAND in argos-ui ui web frontend apps/* packages/* .; do
-            if [ -f "$CAND/package.json" ]; then UI_DIR="$CAND"; break; fi
-          done
-          if [ -z "$UI_DIR" ]; then
-            UI_DIR=$(dirname "$(git ls-files '**/package.json' | head -n1)")
-          fi
-          echo "ui_dir=$UI_DIR" >> $GITHUB_ENV
-          echo "Detected UI dir: '${UI_DIR:-<none>}'"
-          if [ -z "$UI_DIR" ]; then
-            mkdir -p artifacts
-            echo "## argos-ui" > artifacts/ui-summary.md
-            echo "No UI folder with package.json found. Skipping build." >> artifacts/ui-summary.md
-          fi
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install deps (guarded)
-        if: env.ui_dir != ''
-        working-directory: ${{ env.ui_dir }}
+      # Install project deps with the detected package manager
+      - name: Install deps
         run: |
-          if [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm i --frozen-lockfile; \
-          elif [ -f yarn.lock ]; then npm i -g yarn && yarn install --frozen-lockfile; \
-          elif [ -f package-lock.json ]; then npm ci --no-audit --no-fund; \
-          else npm install; fi
+          if [ -f pnpm-lock.yaml ]; then
+            npm i -g pnpm
+            pnpm i --frozen-lockfile
+          elif [ -f yarn.lock ]; then
+            npm i -g yarn
+            yarn install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install
+          fi
 
-      - name: Lint/Test/Build (non-fatal if missing)
-        if: env.ui_dir != ''
-        working-directory: ${{ env.ui_dir }}
+      # Ensure TypeScript + types exist ONLY for this CI run
+      # (so next/ESLint can type-check; no repo changes are pushed)
+      - name: Ensure TS types for lint
+        run: |
+          if [ -f tsconfig.json ]; then
+            if [ -f pnpm-lock.yaml ]; then
+              pnpm add -D typescript @types/react @types/node
+            elif [ -f yarn.lock ]; then
+              yarn add -D typescript @types/react @types/node
+            else
+              npm i -D --no-save typescript @types/react @types/node
+            fi
+          fi
+
+      - name: Lint/Test/Build (non-fatal if scripts missing)
         run: |
           npm run -s lint --if-present
           npm run -s test --if-present
           npm run -s build --if-present
 
-      - name: Upload build / summary
+      - name: Upload build (if any)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: argos-ui-build
           path: |
-            ${{ env.ui_dir }}/dist
-            ${{ env.ui_dir }}/build
-            artifacts/*
+            dist
+            build
           if-no-files-found: warn
