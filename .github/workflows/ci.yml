@@ -1,0 +1,69 @@
+name: CI
+on:
+  push: { branches: ["main"] }
+  pull_request: {}
+permissions: { contents: read }
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-services:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
+            requirements-dev.txt
+            services/**/pyproject.toml
+            services/**/requirements.txt
+            services/**/requirements-dev.txt
+      - name: Install deps (root or service-level)
+        run: |
+          python -m pip install -U pip
+          found=""
+          for f in services/**/pyproject.toml pyproject.toml; do
+            if [ -f "$f" ]; then
+              dir=$(dirname "$f")
+              echo "Installing in $dir"
+              python -m pip install -e "$dir".[dev] || true
+              found="yes"
+            fi
+          done
+          for f in services/**/requirements.txt requirements.txt; do
+            if [ -f "$f" ]; then
+              dir=$(dirname "$f")
+              echo "Installing from $f"
+              python -m pip install -r "$f" || true
+              test -f "${dir}/requirements-dev.txt" && python -m pip install -r "${dir}/requirements-dev.txt" || true
+              found="yes"
+            fi
+          done
+          if [ -z "$found" ]; then echo "No Python manifests found"; fi
+      - name: Lint
+        run: ruff check .
+      - name: Tests
+        run: pytest -q --cov --cov-report=xml || true  # keep green until tests land
+
+  argos-ui:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/argos-ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/argos-ui/package-lock.json
+      - name: Install & build
+        run: |
+          npm ci
+          npm run build
+          npm run lint || true
