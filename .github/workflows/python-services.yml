@@ -18,7 +18,7 @@ jobs:
         shell: bash
         run: |
           set -e
-          PY_DIR="apps/argos-services"
+          PY_DIR="PATH/TO/YOUR-SERVICE"
           for C in services backend api server apps/* packages/* .; do
             if [ -f "$C/requirements.txt" ] || [ -f "$C/scripts/run_demo.py" ] || [ -f "$C/scripts/check_feedback.py" ]; then PY_DIR="$C"; break; fi
           done
