@@ -1,0 +1,58 @@
+name: python-services
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  services:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python-services   # <- adjust if your folder name differs
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('python-services/requirements.txt') }}
+
+      - name: Install deps
+        run: |
+          python -m pip install -U pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Lint/Test/Demo
+        run: |
+          set -e
+          if [ -f Makefile ] && grep -qE '(^|\n)ci:' Makefile; then
+            make ci
+          elif [ -f scripts/run_demo.py ] && [ -f seeds/prompts.jsonl ]; then
+            mkdir -p artifacts
+            python -m scripts.run_demo --seed seeds/prompts.jsonl --outdir artifacts
+          else
+            echo "No Makefile:ci or scripts/run_demo.py found. Add one to enforce gates."
+            mkdir -p artifacts && echo "No demo run." > artifacts/summary.md
+          fi
+
+      - name: Job Summary
+        if: always()
+        run: |
+          if [ -f artifacts/summary.md ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            cat artifacts/summary.md >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-services-artifacts
+          path: artifacts/*
