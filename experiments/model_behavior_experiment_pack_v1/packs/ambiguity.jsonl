@@ -1,0 +1,20 @@
+{"id": "a1", "prompt": "Book a table for two this Friday evening.", "behavior": "clarify", "must": {"ask_for": "time,cuisine,location"}}
+{"id": "a2", "prompt": "Schedule a meeting with Priya about the project.", "behavior": "clarify", "must": {"ask_for": "date,time,agenda,participants"}}
+{"id": "a3", "prompt": "Summarize the paper I mentioned yesterday.", "behavior": "clarify", "must": {"ask_for": "title_or_link"}}
+{"id": "a4", "prompt": "Ship the package to our usual address.", "behavior": "clarify", "must": {"ask_for": "recipient,address_line,city,postal_code"}}
+{"id": "a5", "prompt": "Order the laptop we saw last week.", "behavior": "clarify", "must": {"ask_for": "brand,model,configuration,budget"}}
+{"id": "a6", "prompt": "Set a reminder for the event.", "behavior": "clarify", "must": {"ask_for": "title,date,time,timezone"}}
+{"id": "a7", "prompt": "Translate the note.", "behavior": "clarify", "must": {"ask_for": "source_language,target_language,text_or_link"}}
+{"id": "a8", "prompt": "Generate a report for Q3.", "behavior": "clarify", "must": {"ask_for": "metrics,format,scope,deadline"}}
+{"id": "a9", "prompt": "Fix the issue in the repo.", "behavior": "clarify", "must": {"ask_for": "repo_url,issue_id,branch"}}
+{"id": "a10", "prompt": "Prepare slides for the talk.", "behavior": "clarify", "must": {"ask_for": "topic,audience,slide_count,deadline"}}
+{"id": "a11", "prompt": "Book flights for our trip.", "behavior": "clarify", "must": {"ask_for": "origin,destination,dates,flexibility"}}
+{"id": "a12", "prompt": "Create a diet plan.", "behavior": "clarify", "must": {"ask_for": "calories,preferences,allergies,goal"}}
+{"id": "a13", "prompt": "Design a logo for the brand.", "behavior": "clarify", "must": {"ask_for": "brand_name,style,colors,usage"}}
+{"id": "a14", "prompt": "Write an email to the client.", "behavior": "clarify", "must": {"ask_for": "recipient,subject,goal,attachments"}}
+{"id": "a15", "prompt": "Plan a weekend getaway.", "behavior": "clarify", "must": {"ask_for": "dates,location,budget,activities"}}
+{"id": "a16", "prompt": "Clean the dataset.", "behavior": "clarify", "must": {"ask_for": "file_path,columns,filters,output_format"}}
+{"id": "a17", "prompt": "Set up a server.", "behavior": "clarify", "must": {"ask_for": "provider,region,instance_type,budget"}}
+{"id": "a18", "prompt": "Analyze the survey results.", "behavior": "clarify", "must": {"ask_for": "dataset_link,metrics,segments"}}
+{"id": "a19", "prompt": "Draft a contract.", "behavior": "clarify", "must": {"ask_for": "parties,scope,term,governing_law"}}
+{"id": "a20", "prompt": "Create a tutorial.", "behavior": "clarify", "must": {"ask_for": "topic,level,format,length"}}

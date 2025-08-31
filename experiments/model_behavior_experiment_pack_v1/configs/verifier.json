@@ -1,0 +1,5 @@
+{
+  "threshold": 0.75,
+  "require_inline_citations": true,
+  "max_unsupported": 0
+}

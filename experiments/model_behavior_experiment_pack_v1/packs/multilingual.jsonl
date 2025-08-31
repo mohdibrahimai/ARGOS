@@ -1,0 +1,20 @@
+{"id": "m1_en", "prompt": "Summarize this article (no link provided).", "behavior": "clarify", "must": {"ask_for": "title_or_url"}}
+{"id": "m1_hi", "prompt": "इस लेख का सार बताइए (लिंक नहीं दिया)।", "behavior": "clarify", "must": {"ask_for": "शीर्षक_या_लिंक"}}
+{"id": "m1_ur", "prompt": "اس مضمون کا خلاصہ بتائیں (لنک فراہم نہیں کیا گیا)۔", "behavior": "clarify", "must": {"ask_for": "عنوان_یا_لنک"}}
+{"id": "m1_es", "prompt": "Resume este artículo (no se proporcionó enlace).", "behavior": "clarify", "must": {"ask_for": "título_o_enlace"}}
+{"id": "m2_en", "prompt": "Translate the note.", "behavior": "clarify", "must": {"ask_for": "source_language,target_language,text_or_link"}}
+{"id": "m2_hi", "prompt": "नोट का अनुवाद करें।", "behavior": "clarify", "must": {"ask_for": "स्रोत_भाषा,लक्ष्य_भाषा,पाठ_या_लिंक"}}
+{"id": "m2_ur", "prompt": "نوٹ کا ترجمہ کریں۔", "behavior": "clarify", "must": {"ask_for": "ماخذ_زبان,ہدف_زبان,متن_یا_لنک"}}
+{"id": "m2_es", "prompt": "Traduce la nota.", "behavior": "clarify", "must": {"ask_for": "idioma_origen,idioma_destino,texto_o_enlace"}}
+{"id": "m3_en", "prompt": "Book flights to Delhi.", "behavior": "clarify", "must": {"ask_for": "origin,dates,flexibility"}}
+{"id": "m3_hi", "prompt": "दिल्ली के लिए उड़ानें बुक कीजिए।", "behavior": "clarify", "must": {"ask_for": "मूल,तिथियाँ,लचीलापन"}}
+{"id": "m3_ur", "prompt": "دہلی کے لیے پروازیں بُک کریں۔", "behavior": "clarify", "must": {"ask_for": "روانگی,تاریخیں,لچک"}}
+{"id": "m3_es", "prompt": "Reserva vuelos a Delhi.", "behavior": "clarify", "must": {"ask_for": "origen,fechas,flexibilidad"}}
+{"id": "m4_en", "prompt": "Draft an email to the client.", "behavior": "clarify", "must": {"ask_for": "recipient,subject,goal,attachments"}}
+{"id": "m4_hi", "prompt": "क्लाइंट को ईमेल का मसौदा तैयार करें।", "behavior": "clarify", "must": {"ask_for": "प्राप्तकर्ता,विषय,उद्देश्य,संलग्नक"}}
+{"id": "m4_ur", "prompt": "کلائنٹ کو ای میل کا مسودہ تیار کریں۔", "behavior": "clarify", "must": {"ask_for": "موصول_کنندہ,موضوع,مقصد,منسلکات"}}
+{"id": "m4_es", "prompt": "Redacta un correo al cliente.", "behavior": "clarify", "must": {"ask_for": "destinatario,asunto,objeto,adjuntos"}}
+{"id": "m5_en", "prompt": "Create a meal plan.", "behavior": "clarify", "must": {"ask_for": "calories,preferences,allergies,goal"}}
+{"id": "m5_hi", "prompt": "भोजन योजना बनाएँ।", "behavior": "clarify", "must": {"ask_for": "कैलोरी,पसंद,एलर्जी,लक्ष्य"}}
+{"id": "m5_ur", "prompt": "کھانے کا منصوبہ بنائیں۔", "behavior": "clarify", "must": {"ask_for": "کیلوریز,پسند,الرجیز,ہدف"}}
+{"id": "m5_es", "prompt": "Crea un plan de comidas.", "behavior": "clarify", "must": {"ask_for": "calorías,preferencias,alergias,objetivo"}}

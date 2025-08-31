@@ -1,0 +1,16 @@
+# contracts/clarity.yaml
+name: clarity-v1
+rules:
+  - id: ask-missing-slots
+    when: prompt_is_ambiguous
+    require:
+      - ask_for_missing: ["who","where","when","which","source"]
+  - id: no-bluff
+    forbid:
+      - unsupported_claim
+gates:
+  min_clarifications: 1
+  max_unsupported_claims: 0
+ci:
+  fail_if:
+    - adherence < 0.75
